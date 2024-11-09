@@ -2,13 +2,19 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { GasstationsController } from './gasstations/gasstations.controller';
-import { GasstationService } from './gasstations/services/gasstation.service';
-import { Gasstation } from './gasstations/entities/gasstation.entity';
+import { GasStationsModule } from './gasstations/gasstations.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([Gasstation])],
-  controllers: [AppController, GasstationsController],
-  providers: [AppService, GasstationService],
+  imports: [
+    TypeOrmModule.forRoot({
+      keepConnectionAlive: true,
+      autoLoadEntities: true,
+    }),
+    GasStationsModule,
+    UsersModule
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
