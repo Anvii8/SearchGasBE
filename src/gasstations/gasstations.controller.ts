@@ -1,22 +1,23 @@
-import { Controller, Get, HttpStatus, Param, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { GasstationService } from './services/gasstation.service';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { GasstationDto } from './models/gasstation.dto';
 
 @Controller('gasstations')
 export class GasstationsController {
-    constructor(private readonly gasolinerasService: GasstationService) {}
+  constructor(private readonly gasolinerasService: GasstationService) {}
 
   @Get(':location')
-  getById(@Res() response: Response, @Param('location') location: string): void {
-    this.gasolinerasService
-      .getByLocation(location)
-      .then((msg) => {
-        response.status(HttpStatus.OK).json(msg);
-      })
-      .catch((error) => {
-        response
-          .status(HttpStatus.FORBIDDEN)
-          .json({ error, msg: 'error in get gasStation by location' });
-      });
+  async getByLocation(@Param('location') location: string): Promise<GasstationDto[]> {
+    return await this.gasolinerasService.findByLocation(location);
+  }
+  
+  @Get(':location/:fuel')
+  @ApiBearerAuth('access_token')
+  @UseGuards(AuthGuard('jwt'))
+  async getByLocationFuel(@Param('location') location: string, @Param('fuel') fuel: string): Promise<GasstationDto[]> {
+    const fuelArray = fuel.split(',');
+    return await this.gasolinerasService.findByLocationAndFuel(location, fuelArray);
   }
 }
