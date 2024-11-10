@@ -1,10 +1,16 @@
 import * as bcrypt from 'bcrypt';
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
+import {
+  BaseEntity,
+  BeforeInsert,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  userId: string;
+  readonly userId: string;
 
   @Column({ length: 55 })
   name: string;
@@ -12,7 +18,7 @@ export class UserEntity extends BaseEntity {
   @Column({ length: 55 })
   surname: string;
 
-  @Column({ unique: true })
+  @Column({unique: true })
   email: string;
 
   @Column({ type: 'varchar', length: 70 })
@@ -26,5 +32,20 @@ export class UserEntity extends BaseEntity {
 
   async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compareSync(password, this.password);
+  }
+
+  constructor(
+    userId: string,
+    name: string,
+    surname: string,
+    email: string,
+    password: string,
+  ) {
+    super();
+    this.userId = userId;
+    this.name = name;
+    this.surname = surname;
+    this.email = email;
+    this.password = password;
   }
 }
