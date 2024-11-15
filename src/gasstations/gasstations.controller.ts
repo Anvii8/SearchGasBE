@@ -8,12 +8,19 @@ import { GasstationDto } from './models/gasstation.dto';
 export class GasstationsController {
   constructor(private readonly gasolinerasService: GasstationService) {}
 
-  @Get(':location')
+  @Get('location/:location')
   async getByLocation(@Param('location') location: string): Promise<GasstationDto[]> {
     return await this.gasolinerasService.findByLocation(location);
   }
+
+  @Get('id/:id')
+  @ApiBearerAuth('access_token')
+  @UseGuards(AuthGuard('jwt'))
+  async getById(@Param('id') id: number): Promise<GasstationDto> {    
+    return await this.gasolinerasService.findById(id);
+  }
   
-  @Get(':location/:fuel')
+  @Get('location/:location/fuel/:fuel')
   @ApiBearerAuth('access_token')
   @UseGuards(AuthGuard('jwt'))
   async getByLocationFuel(@Param('location') location: string, @Param('fuel') fuel: string): Promise<GasstationDto[]> {

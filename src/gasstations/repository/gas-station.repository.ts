@@ -5,13 +5,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 @EntityRepository(Gasstation)
 export class GasStationRepository {
 
-    constructor(
-        @InjectRepository(Gasstation)
-        private gasolinerasRepository: Repository<Gasstation>,
-    ) {}
+  constructor(
+    @InjectRepository(Gasstation)
+    private gasolinerasRepository: Repository<Gasstation>,
+  ) {}
 
   async findByLocation(location: string): Promise<Gasstation[]> {
     return await this.gasolinerasRepository.find({ where: { localidad: location } });
+  }
+
+  async findById(id: number): Promise<Gasstation> {    
+    return await this.gasolinerasRepository.findOne(id);
   }
 
   async findByLocationAndFuel(location: string, fuel: string[]): Promise<Gasstation[]> {
