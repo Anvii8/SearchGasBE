@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { GasStationsModule } from './gasstations/gasstations.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { FavoritesModule } from './favorites/favorites.module';
+import { ValorationModule } from './valorations/valorations.module';
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { AuthModule } from './auth/auth.module';
     }),
     GasStationsModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    FavoritesModule,
+    ValorationModule
   ],
   controllers: [AppController],
   providers: [AppService],
