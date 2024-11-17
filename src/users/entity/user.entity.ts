@@ -1,9 +1,12 @@
 import * as bcrypt from 'bcrypt';
+import { FavoritosEntity } from 'src/favorites/entity/favorite.entity';
+import { ValorationsEntity } from 'src/valorations/entity/valoration.entity';
 import {
   BaseEntity,
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -33,6 +36,12 @@ export class UserEntity extends BaseEntity {
   async validatePassword(password: string): Promise<boolean> {
     return bcrypt.compareSync(password, this.password);
   }
+
+  @OneToMany(() => FavoritosEntity, (favorito) => favorito.user)
+  favoritos: FavoritosEntity[];
+
+  @OneToMany(() => ValorationsEntity, (valoration) => valoration.user)
+  valorations: ValorationsEntity[];
 
   constructor(
     userId: string,

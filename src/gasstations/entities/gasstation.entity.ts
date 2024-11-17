@@ -1,7 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { FavoritosEntity } from 'src/favorites/entity/favorite.entity';
+import { ValorationsEntity } from 'src/valorations/entity/valoration.entity';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class Gasstation {
+@Entity('gasstation')
+export class GasStationEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,25 +13,25 @@ export class Gasstation {
   @Column()
   direccion: string;
 
-  @Column()
-  longitud: string;
+  @Column('decimal', { precision: 8, scale: 6 })
+  longitud: number;
 
-  @Column()
-  latitud: string;
+  @Column('decimal', { precision: 8, scale: 6 })
+  latitud: number;
 
   @Column()
   fechadatos: string;
 
-  @Column('decimal', { precision: 5, scale: 3 })
+  @Column('decimal', { precision: 4, scale: 3 })
   preciogasolina95: number;
 
-  @Column('decimal', { precision: 5, scale: 3 })
+  @Column('decimal', { precision: 4, scale: 3 })
   preciogasolina98: number;
 
-  @Column('decimal', { precision: 5, scale: 3 })
+  @Column('decimal', { precision: 4, scale: 3 })
   preciodiesel: number;
 
-  @Column('decimal', { precision: 5, scale: 3 })
+  @Column('decimal', { precision: 4, scale: 3 })
   preciodieselpremium: number;
 
   @Column()
@@ -37,4 +39,16 @@ export class Gasstation {
 
   @Column()
   horario: string;
+
+  @Column('decimal', { precision: 3, scale: 2, default: 0.00 })
+  distance: number;
+
+  @Column('decimal', { precision: 3, scale: 2, default: 0.00 })
+  travelTime: number;
+
+  @OneToMany(() => FavoritosEntity, (favorito) => favorito.gasStation)
+  favoritos: FavoritosEntity[];
+
+  @OneToMany(() => ValorationsEntity, (valoration) => valoration.gasStation)
+  valorations: ValorationsEntity[];
 }
