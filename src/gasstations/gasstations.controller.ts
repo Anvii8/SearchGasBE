@@ -10,7 +10,7 @@ export class GasstationsController {
 
   @Get('location/:location')
   async getByLocation(@Param('location') location: string): Promise<GasstationDto[]> {
-    return await this.gasolinerasService.findByLocation(location);
+    return await this.gasolinerasService.getGasStationsByLocation(location);
   }
 
   @Get('id/:id')
@@ -26,5 +26,10 @@ export class GasstationsController {
   async getByLocationFuel(@Param('location') location: string, @Param('fuel') fuel: string): Promise<GasstationDto[]> {
     const fuelArray = fuel.split(',');
     return await this.gasolinerasService.findByLocationAndFuel(location, fuelArray);
+  }
+
+  @Get('locations')
+  async getAllLocations(): Promise<string[]> {
+    return await this.gasolinerasService.getAllLocations();
   }
 }

@@ -15,6 +15,12 @@ export class GasStationRepository {
     return await this.gasolinerasRepository.find({ where: { localidad: location } });
   }
 
+  async getAllLocations(): Promise<string[]> {
+    const gasStations = await this.gasolinerasRepository.find({ select: ['localidad'] });
+    const localidades = gasStations.map(gasStation => gasStation.localidad);
+    return [...new Set(localidades)];
+  }
+
   async findById(id: number): Promise<GasStationEntity> {    
     return await this.gasolinerasRepository.findOne(id);
   }

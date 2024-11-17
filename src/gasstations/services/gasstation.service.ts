@@ -8,7 +8,7 @@ export class GasstationService {
       private gasolinerasRepository: GasStationRepository,
     ) {}
     
-  async findByLocation(location: string): Promise<GasstationDto[]> {
+  async getGasStationsByLocation(location: string): Promise<GasstationDto[]> {
     return await this.gasolinerasRepository.findByLocation(location);
   }
 
@@ -18,5 +18,9 @@ export class GasstationService {
   
   async findByLocationAndFuel(location: string, fuel: string[]): Promise<GasstationDto[]> {   
     return await this.gasolinerasRepository.findByLocationAndFuel(location, fuel);
+  }
+
+  async getAllLocations(): Promise<string[]> {   
+    return await this.gasolinerasRepository.getAllLocations();
   }
 }
