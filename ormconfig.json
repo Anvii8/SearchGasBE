@@ -1,10 +1,10 @@
 {
   "type": "postgres",
-  "host": "dpg-cseg5ftsvqrc73f2ufr0-a",
+  "host": "dpg-cstnk0dds78s73cllnbg-a",
   "port": 5432,
-  "username": "postgre",
-  "password": "jNUZoyfwpFgErVQvOKi1DZDJsZihPm7s",
-  "database": "tfmsearchgas",
+  "username": "aandresvi",
+  "password": "n4AoVkNmfggu7dLBJliAY9v4Q3BQ4HfA",
+  "database": "tfmsearchgas2",
   "entities": ["dist/**/*.entity{.ts,.js}"],
   "synchronize": true
 }
