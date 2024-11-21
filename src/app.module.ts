@@ -7,12 +7,16 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { ValorationModule } from './valorations/valorations.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       keepConnectionAlive: true,
       autoLoadEntities: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true
     }),
     GasStationsModule,
     UsersModule,
