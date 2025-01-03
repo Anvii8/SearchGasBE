@@ -29,8 +29,8 @@ export class GasStationRepository {
     const fuelColumnMap: { [key: string]: string } = {
       "Gasolina 95": "preciogasolina95",
       "Gasolina 98": "preciogasolina98",
-      "Diesel": "preciodiesel",
-      "Diesel Premium": "preciodieselpremium",
+      "Diésel": "preciodiesel",
+      "Diésel Premium": "preciodieselpremium",
     };
 
     const fuelConditions = fuel.map(fuel => {
